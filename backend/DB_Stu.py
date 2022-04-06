@@ -1,30 +1,44 @@
 '''
 Date: 2022-04-05 00:24:27
 LastEditors: Azus
-LastEditTime: 2022-04-07 00:00:00
-FilePath: /DS/student.py
+LastEditTime: 2022-04-07 00:50:54
+FilePath: /DS/backend/DB_Stu.py
 '''
 
-from asyncio import FastChildWatcher
-from matplotlib.pyplot import switch_backend
 import pandas as pd
 # StudentNumber, Gender, Name, Class
 from logger import logger
+# For sync lock
+import threading
+# class X:
+#     #定义需要保证线程安全的方法
+#     def m () :
+#         #加锁
+#         self.lock.acquire()
+#         try :
+#             #需要保证线程安全的代码
+#             ＃...方法体
+#         #使用finally 块来保证释放锁
+#         finally :
+#             #修改完成，释放锁
+#             self.lock.release()
 
+# Columns in student.csv
 COLUMNS = [
     'StudentNumber', 'Gender', 'Name', 'Class']
-DB_PATH = './DB/student.csv'
+DB_PATH = '../DB/student.csv'
 ENV='production'
 
 # df['证券名称'].str.contains('联通') ]
 
 
-class students(object):
+class db_students(object):
     def __init__(self, DB_PATH=DB_PATH): # Load student DB
         self.save_path = DB_PATH
-        self.df = pd.read_csv(self.save_path)
-        self.df = self.df.set_index('StudentNumber')
-        logger.info(f'STUDENT DB LOADED')
+        self.load()
+
+        #provide sync lock
+        self.lock = threading.RLock()
     
     def load(self):
         self.df = pd.read_csv(self.save_path)
@@ -36,15 +50,16 @@ class students(object):
             self.df.to_csv(self.save_path)
 
     def add(self, studentInfo: list): # add new student
+        self.load()
         studentInfo[0][0] = int(studentInfo[0][0])
-        new_stu = pd.DataFrame(studentInfo, columns=[
-            'StudentNumber', 'Gender', 'Name', 'Class'])
+        new_stu = pd.DataFrame(studentInfo, columns=COLUMNS)
         new_stu.set_index('StudentNumber', inplace=True)
         self.df = pd.concat([self.df, new_stu])
         self.save()
         logger.info(f'NEW STUDENT ADDED:{self.df.loc[studentInfo[0][0]]["Name"]}')
     
     def updateClass(self, student: int, classes: list) -> bool: # add class info to a student 
+        self.load()
         try:
             self.df.loc[student]['Class'] = classes
         except KeyError:
@@ -54,6 +69,7 @@ class students(object):
         return True
     
     def drop(self, student: int) -> bool:   # delete student info
+        self.load()
         try:
             self.df = self.df.drop(int(student))
         except KeyError:
@@ -67,6 +83,7 @@ class students(object):
         return self.df.to_string()
     
     def query(self, studentNo:int)->pd.Series:  #query student by student number
+        self.load()
         return self.df.loc[studentNo]
         
     
@@ -102,4 +119,10 @@ def CLI():
                 print('not found')
         i = input(f'\n1: Add 2: Del 3. print all 4. Check Student\n')
 
-CLI()
+
+students = db_students(DB_PATH)
+
+if __name__ == '__main__':
+    CLI()
+
+
