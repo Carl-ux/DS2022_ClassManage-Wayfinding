@@ -1,8 +1,8 @@
 '''
 Date: 2022-04-05 00:24:27
 LastEditors: Azus
-LastEditTime: 2022-04-07 00:50:54
-FilePath: /DS/backend/DB_Stu.py
+LastEditTime: 2022-04-08 10:19:42
+FilePath: /DS/backend/Database/DB_Stu.py
 '''
 
 import pandas as pd
@@ -26,7 +26,7 @@ import threading
 # Columns in student.csv
 COLUMNS = [
     'StudentNumber', 'Gender', 'Name', 'Class']
-DB_PATH = '../DB/student.csv'
+DB_PATH = '/Users/azus/Documents/Code/Py/DS/DB/student.csv'
 ENV='production'
 
 # df['证券名称'].str.contains('联通') ]
