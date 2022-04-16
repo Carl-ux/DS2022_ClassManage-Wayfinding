@@ -1,13 +1,14 @@
 '''
 Date: 2022-04-05 00:24:27
 LastEditors: Azus
-LastEditTime: 2022-04-08 10:19:42
-FilePath: /DS/backend/Database/DB_Stu.py
+LastEditTime: 2022-04-15 19:40:21
+FilePath: /DS/backend/DB_Stu.py
 '''
 
 import pandas as pd
 # StudentNumber, Gender, Name, Class
 from logger import logger
+# TODO Multi-threading
 # For sync lock
 import threading
 # class X:
@@ -32,6 +33,7 @@ ENV='production'
 # df['证券名称'].str.contains('联通') ]
 
 
+# @use: students = db_students(DB_PATH)
 class db_students(object):
     def __init__(self, DB_PATH=DB_PATH): # Load student DB
         self.save_path = DB_PATH
@@ -83,12 +85,11 @@ class db_students(object):
         return self.df.to_string()
     
     def query(self, studentNo:int)->pd.Series:  #query student by student number
-        self.load()
-        return self.df.loc[studentNo]
-        
-    
+        _target = pd.Series()
+        return self.df.loc[int(studentNo)]
 
-    
+        
+# construct new studnet from stdin 
 def get_new_student() -> list:
     new_stu = []
     print('The classes of the new student are empty by default. Use add_class() to update.')
@@ -98,31 +99,32 @@ def get_new_student() -> list:
     return new_stu
 
 
+def CLI(students:db_students):
 
-def CLI():
-    db = students(DB_PATH)
     i = input(f'1: Add 2: Del 3. print all 4. Check Student\n')
     while(i!='q'):
         if i == '1':
-            db.add(get_new_student())
+            students.add(get_new_student())
+            print(students.to_string())
         elif i == '2':
-            db.drop(input("Student Number:"))
-            print(db.to_string())
+            students.drop(input("Student Number:"))
+            print(students.to_string())
         elif i == '3':
-            print(db.to_string())
+            print(students.to_string())
         elif i == '4':
             stunu = input("student number\n")
             try:
                 # print(df.to_string())
-                print(db.df.loc[int(stunu)].to_string())
+                print(students.query(stunu).to_string())
             except KeyError:
-                print('not found')
+                print('Student not found')
         i = input(f'\n1: Add 2: Del 3. print all 4. Check Student\n')
 
-
+# initialize students database 
 students = db_students(DB_PATH)
 
+# Testrun if run as main 
 if __name__ == '__main__':
-    CLI()
+    CLI(students)
 
-
+    
