@@ -1,7 +1,7 @@
 '''
 Date: 2022-04-05 00:24:27
 LastEditors: Azus
-LastEditTime: 2022-04-15 19:40:21
+LastEditTime: 2022-04-16 15:40:30
 FilePath: /DS/backend/DB_Stu.py
 '''
 
@@ -11,6 +11,7 @@ from logger import logger
 # TODO Multi-threading
 # For sync lock
 import threading
+import numpy
 # class X:
 #     #定义需要保证线程安全的方法
 #     def m () :
@@ -88,6 +89,21 @@ class db_students(object):
         _target = pd.Series()
         return self.df.loc[int(studentNo)]
 
+        # TODO
+    def get_db_as_list(self)->list: # ret df as list
+
+        df = pd.read_csv(self.save_path)
+        # data as array(numpy.ndarray)
+        ary = df.values
+        # info of the first student
+        print(ary[0])
+        # StudentNumber, Gender, Name, Class
+
+        # the student number of the first student
+        print(ary[0][0])
+        # the name of the first student
+        print(ary[0][2])
+        return ary
         
 # construct new studnet from stdin 
 def get_new_student() -> list:
@@ -125,6 +141,7 @@ students = db_students(DB_PATH)
 
 # Testrun if run as main 
 if __name__ == '__main__':
-    CLI(students)
+    # CLI(students)
+    students.get_db_as_list()
 
     
