@@ -1,12 +1,11 @@
 '''
 Date: 2022-04-07 00:28:27
 LastEditors: Azus
-LastEditTime: 2022-04-15 19:41:39
+LastEditTime: 2022-04-19 21:04:28
 FilePath: /DS/backend/DB_Classes.py
 '''
 
 import pandas as pd
-# classesNumber, Gender, Name, Class
 import threading
 import json
 import sys
