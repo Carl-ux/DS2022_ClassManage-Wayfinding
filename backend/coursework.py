@@ -1,7 +1,7 @@
 '''
 Date: 2022-04-07 22:28:19
 LastEditors: Azus
-LastEditTime: 2022-04-15 20:10:17
+LastEditTime: 2022-04-19 21:17:07
 FilePath: /DS/backend/coursework.py
 '''
 import os
@@ -12,6 +12,7 @@ from debugpy import trace_this_thread
 from DB_Classes import classes
 from DB_Stu import students
 import hashlib
+import zip as zp
 
 COURSEWORK_FOLDER='/Users/azus/Documents/Code/Py/DS/DB/coursework/'
 
@@ -69,14 +70,14 @@ def zip(coursework_path:str, dst_dir:str, zip_name:str)->bool: # get the work th
     
     # TODO: read file and zip
     # TODO: 从coursework_path读入文件，用某种方法压缩，还是放在coursework_path
-    
-    # mv the zipped file to the destination
     rn_path = os.path.join(os.path.dirname(coursework_path),zip_name)
-    shutil.move(coursework_path,rn_path)
+    zp.compress(coursework_path, rn_path)
+    # mv the zipped file to the destination
+    # shutil.move(coursework_path,rn_path)
     shutil.move(rn_path, os.path.join(dst_dir, zip_name))
     return True
 
 if __name__ == "__main__":
-    print(submit_work(2020211550, 202201, "/Users/azus/Documents/Code/Py/DS/artifact.png", "example.jpeg" ))
+    # print(submit_work(2020211550, 202201, "/Users/azus/Documents/Code/Py/DS/15-e-g-w-r-I-e-5-e-s-l-l-)-k.png", "example" ))
     print(students.df.to_string())
     
