@@ -1,13 +1,13 @@
 '''
 Date: 2022-04-07 22:28:19
 LastEditors: Azus
-LastEditTime: 2022-04-19 21:17:07
+LastEditTime: 2022-04-20 01:39:20
 FilePath: /DS/backend/coursework.py
 '''
 import os
 import time
 import shutil
-
+import logger
 from debugpy import trace_this_thread
 from DB_Classes import classes
 from DB_Stu import students
@@ -49,6 +49,7 @@ def submit_work(studentNo:int, classNo:int, coursework_path, name:str)->bool:
                     return False
     
     zip(coursework_path, student_folder, submit_date+"_"+filehash+os.path.splitext(coursework_path)[-1])
+    logger.logger.info(f'{studentNo} uploaded {name} to class {classNo}.')
 
 
 def hash_file(file_path, Bytes=1024):    # ret hex hash of file
@@ -65,12 +66,13 @@ def hash_file(file_path, Bytes=1024):    # ret hex hash of file
     return ret
     
 
-#! --------to be done-----------
+
 def zip(coursework_path:str, dst_dir:str, zip_name:str)->bool: # get the work then zip to the target folder
     
     # TODO: read file and zip
     # TODO: 从coursework_path读入文件，用某种方法压缩，还是放在coursework_path
     rn_path = os.path.join(os.path.dirname(coursework_path),zip_name)
+    # zipping
     zp.compress(coursework_path, rn_path)
     # mv the zipped file to the destination
     # shutil.move(coursework_path,rn_path)
@@ -78,6 +80,10 @@ def zip(coursework_path:str, dst_dir:str, zip_name:str)->bool: # get the work th
     return True
 
 if __name__ == "__main__":
-    # print(submit_work(2020211550, 202201, "/Users/azus/Documents/Code/Py/DS/15-e-g-w-r-I-e-5-e-s-l-l-)-k.png", "example" ))
-    print(students.df.to_string())
+    # print(submit_work(2020211550, 202201, "/Users/azus/Documents/Code/Py/DS/EXAMPLE.png", "example" ))
+    # print(students.df.to_string())
+    # print(classes.df.to_string())
+    zp.decompress('/Users/azus/Documents/Code/Py/DS/DB/coursework/202201/2020211550/2022040138_b535.png', '/Users/azus/Documents/Code/Py/DS/exp.png')
+    
+
     
