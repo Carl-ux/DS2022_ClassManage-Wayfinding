@@ -1,0 +1,67 @@
+.
+├── DB     
+│   ├── class.csv
+│   ├── coursework
+│   │   ├── 202201
+│   │   └── 202205
+│   └── student.csv
+├── README.md
+├── backend
+│   ├── client.py
+│   ├── log.txt
+│   ├── module
+│   │   ├── DB.py
+│   │   ├── DB_Classes.py
+│   │   ├── DB_Stu.py
+│   │   ├── __init_.py
+│   │   ├── __pycache__
+│   │   ├── app.py
+│   │   ├── coursework.py
+│   │   ├── interface.py
+│   │   ├── log.txt
+│   │   ├── logger.py
+│   │   ├── map.py
+│   │   ├── reverseProxy.py
+│   │   ├── time.json
+│   │   ├── timing.py
+│   │   ├── user.py
+│   │   ├── util.py
+│   │   └── zip.py
+│   ├── tempCodeRunnerFile.py
+│   └── test.py
+├── frontend
+│   ├── LICENSE
+│   ├── build
+│   ├── jest.config.js
+│   ├── jsconfig.json
+│   ├── node_modules
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   ├── favicon.ico
+│   │   ├── index.html
+│   │   └── manifest.json
+│   ├── src
+│   │   ├── App.js
+│   │   ├── App.test.js
+│   │   ├── _nav.js
+│   │   ├── apis.js
+│   │   ├── assets
+│   │   ├── components
+│   │   │   ├── ...
+│   │   ├── index.js
+│   │   ├── layout
+│   │   ├── reportWebVitals.js
+│   │   ├── routes.js
+│   │   ├── scss
+│   │   ├── setupTests.js
+│   │   ├── store.js
+│   │   └── views
+│   └── yarn.lock
+├── log.txt
+├── settings.json
+├── test.ipynb
+├── time.json
+└── tree.txt
+
+861 directories, 57 files
